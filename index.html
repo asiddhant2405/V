@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Belated Valentine? ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(180deg, #ff758c, #ffb347);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #fff;
+      position: relative;
+    }
+
+    /* Sunflower Background */
+    .sunflower {
+      position: fixed;
+      font-size: 40px;
+      opacity: 0.15;
+      z-index: 0;
+      animation: floatSunflower 20s linear infinite;
+    }
+
+    @keyframes floatSunflower {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1.2s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      padding: 50px;
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      max-width: 650px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .buttons {
+      position: relative;
+      height: 120px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      margin: 10px;
+      position: absolute;
+    }
+
+    #yesBtn {
+      background: #ff4b5c;
+      color: white;
+      left: 25%;
+      transform: scale(1);
+    }
+
+    #yesBtn:hover { background: #ff1e3c; }
+
+    #noBtn {
+      background: white;
+      color: #ff4b5c;
+      left: 55%;
+    }
+
+    .result {
+      margin-top: 25px;
+      font-size: 1.4rem;
+      display: none;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    .heart {
+      position: fixed;
+      color: #fff;
+      font-size: 20px;
+      animation: float 5s linear infinite;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .confetti {
+  position: fixed;   /* important */
+  top: -20px;        /* start above screen */
+  width: 10px;
+  height: 10px;
+  opacity: 0.9;
+  animation: confettiFall linear forwards;
+  z-index: 999;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="https://www2.cs.uic.edu/~i101/SoundFiles/CanonInD.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Sunflowers -->
+  <script>
+    for (let i = 0; i < 15; i++) {
+      const flower = document.createElement('div');
+      flower.classList.add('sunflower');
+      flower.innerHTML = '🌻';
+      flower.style.left = Math.random() * 100 + 'vw';
+      flower.style.animationDuration = (Math.random() * 10 + 15) + 's';
+      document.body.appendChild(flower);
+    }
+  </script>
+
+  <!-- Section 1 -->
+  <section>
+    <div class="container">
+      <h1>I know I am a little late...But</h1>
+	<p id="typingText"></p>
+
+      <p>
+        Since you have never celebrated Valentine's Day, I thought I'd do something for you. If I had known you were expecting to celebrate Valentine's, I would not have disappointed you...
+      </p>
+      <p>
+        I want you to know that even if I might not talk to you, I still love you with everything I have...
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section>
+    <div class="container">
+      <h1>You Are My Everything...</h1>
+      <p>
+        I just want to see you happy all the time.
+      </p>
+      <p>
+        Okay, time is a restraint right now so...
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section>
+    <div class="container" id="container">
+      <h1>Will You Be My Belated Valentine? ❤️</h1>
+      <div class="buttons">
+        <button id="yesBtn" onclick="sayYes()">Yes 💘</button>
+        <button id="noBtn" onmouseover="moveNo()">No 🙈</button>
+      </div>
+      <div class="result" id="resultMessage">
+        You are the most beautiful person I have ever laid eyes on ❤️✨
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Scroll animation
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(section => observer.observe(section));
+
+    let yesScale = 1;
+
+    function sayYes() {
+      document.getElementById('resultMessage').style.display = 'block';
+      launchConfetti();
+	for (let i = 0; i < 30; i++) {
+         createHeart();
+      }
+
+    }
+
+    function moveNo() {
+      const noBtn = document.getElementById('noBtn');
+      const container = document.getElementById('container');
+      const yesBtn = document.getElementById('yesBtn');
+      const maxX = container.offsetWidth - noBtn.offsetWidth;
+      const maxY = container.offsetHeight - noBtn.offsetHeight;
+      noBtn.style.left = Math.random() * maxX + 'px';
+      noBtn.style.top = Math.random() * maxY + 'px';
+      yesScale += 0.1;
+      yesBtn.style.transform = `scale(${yesScale})`;
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    function launchConfetti() {
+  for (let i = 0; i < 150; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 5000);
+  }
+}
+
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
